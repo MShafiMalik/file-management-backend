@@ -20,7 +20,15 @@ export class AuthService {
     password: string,
   ): Promise<JwtPayloadDto | null> {
     const user = await this.usersService.getUserByEmail(email);
-    if (user && this.utilService.verifyPassword(password, user.password)) {
+
+    if (!user) return null;
+
+    const isVerified = await this.utilService.verifyPassword(
+      password,
+      user.password,
+    );
+
+    if (user && isVerified) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user; // Disable unused-vars rule here
       return result;
@@ -34,10 +42,14 @@ export class AuthService {
 
   async login(loginDto: LoginDto): Promise<LoginResponseDto> {
     const user = await this.usersService.getUserByEmail(loginDto.email);
-    const payload: JwtPayloadDto = { _id: user._id, email: user.email };
+    const payload: JwtPayloadDto = {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    };
     return {
       accessToken: this.jwtService.sign(payload),
-      user,
+      user: payload,
     };
   }
 }

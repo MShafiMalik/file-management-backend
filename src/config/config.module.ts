@@ -20,7 +20,7 @@ import { MulterModule } from '@nestjs/platform-express';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET_KEY,
-      signOptions: { expiresIn: '3d' },
+      signOptions: { expiresIn: '5h' },
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),

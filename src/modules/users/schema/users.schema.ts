@@ -12,6 +12,11 @@ export class User {
 
   @Prop()
   @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @Prop()
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 

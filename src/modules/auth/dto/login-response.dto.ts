@@ -1,8 +1,8 @@
-import { User } from 'src/modules/users/schema/users.schema';
+import JwtPayloadDto from './jwt-payload.dto';
 
 class LoginResponseDto {
   accessToken: string;
-  user: User;
+  user: JwtPayloadDto;
 }
 
 export default LoginResponseDto;
